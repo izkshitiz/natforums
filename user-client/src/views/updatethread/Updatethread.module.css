@@ -1,0 +1,28 @@
+.contentwrapper {
+    align-self: flex-start;
+    background-color: white;
+    grid-column: auto/span 16;
+    display: flex;
+    padding: 20px;
+}
+
+.updatethreadcontainer {
+    flex-basis: 100%;
+    margin: 0 auto;
+    align-self: center;
+}
+
+.options {
+    margin-bottom: 20px;
+}
+
+h3 {
+    text-align: left;
+    padding-top: 10px;
+}
+
+@media only screen and (min-width: 992px) {
+    .contentwrapper {
+        grid-column: 4/span 10;
+    }
+}

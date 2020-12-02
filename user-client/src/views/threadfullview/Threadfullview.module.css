@@ -1,0 +1,9 @@
+.contentwrapper {
+    grid-column: auto/span 16;
+}
+
+@media only screen and (min-width: 992px) {
+    .contentwrapper {
+        grid-column: 4/span 10;
+    }
+}

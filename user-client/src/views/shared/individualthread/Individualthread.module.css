@@ -1,0 +1,94 @@
+.individualthreadcontainer {
+    /* Width of this container is managed by parent container*/
+    display: grid;
+    /* grid-template-rows: 30px auto 30px; */
+    height: auto;
+    background-color: white;
+    text-align: start;
+    margin: 20px 10px;
+    padding: 15px 20px;
+    position: relative;
+}
+
+.loading {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 1);
+    opacity: .5;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.individualthreadtopbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftwrapper {}
+
+.threadoptionsmenu {}
+
+.date {
+    margin-left: 10px;
+    color: grey;
+    font-size: 12px;
+}
+
+.publishedtext {
+    margin-left: 10px;
+    color: grey;
+    font-size: 12px;
+}
+
+.sectiontext {
+    margin-left: 10px;
+    color: grey!important;
+    font-size: 12px;
+}
+
+.optionsmenutext {
+    font-size: 10px;
+}
+
+.individualthreadcontentbox p {
+    color: grey;
+}
+
+.individualthreadcontentbox img, video, iframe {
+    width: 100%;
+}
+
+.individualthreadcontentboxcompact {
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+}
+
+.individualthreadcontentboxcompact p {
+    color: #0d0d0d
+}
+
+.individualthreadcontentboxcompact ::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    -webkit-box-shadow: inset 0px -80px 57px -72px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 0px -80px 57px -72px rgba(255, 255, 255, 1);
+    box-shadow: inset 0px -80px 57px -72px rgba(255, 255, 255, 1);
+}
+
+.individualthreadcontentboxcompact img, video, iframe {
+    width: 100%;
+}
+
+.individualthreadoptionsbox {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+@media only screen and (min-width: 992px) {}

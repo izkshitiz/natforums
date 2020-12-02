@@ -1,0 +1,18 @@
+.contentwrapper {
+    align-self: flex-start;
+    background-color: white;
+    grid-column: auto/span 16;
+    display: flex;
+    padding: 20px;
+}
+
+.signupformcontainer {
+    margin: 0 auto;
+    align-self: center;
+}
+
+@media only screen and (min-width: 992px) {
+    .contentwrapper {
+        grid-column: 4/span 10;
+    }
+}

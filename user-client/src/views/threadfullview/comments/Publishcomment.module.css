@@ -1,0 +1,7 @@
+.publishcommentcontainer {
+    grid-column: 4/span 10;
+    background-color: white;
+    text-align: end;
+    margin: 10px;
+    padding: 15px 20px;
+}

@@ -1,0 +1,4 @@
+server/node_modules/
+server/public
+user-client/node_modules/
+user-client/build/

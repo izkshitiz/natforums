@@ -1,0 +1,6 @@
+.contentwrapper {
+    grid-column: auto/span 16;
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: auto;   
+}

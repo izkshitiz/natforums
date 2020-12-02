@@ -1,0 +1,123 @@
+.cardcontainer {
+    grid-column: auto/span 16;
+    display: grid;
+    background-color: white;
+    margin: 10px;
+}
+
+.imagesection {
+    display: none;
+}
+
+.textsection {
+    display: none;
+}
+
+.summarysection {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content-box;
+    grid-column: auto/span 12;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: start;
+    padding: 15px;
+}
+
+.summarysubtext {
+    font-size: .8em;
+    display: inline;
+    margin-bottom: 10px;
+    align-self: flex-start;
+    padding: 1px 8px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 223, 223);
+    border-radius: 5px;
+}
+
+.summarytext {
+    color: rgb(105, 105, 105);
+}
+
+.summarytext>p {
+    padding-left: 10px;
+    border-left: 1px solid rgb(255, 116, 116);
+}
+
+.time {
+    font-size: small;
+    color: rgb(145, 143, 143);
+}
+
+@media only screen and (min-width: 992px) {
+    .cardcontainer {
+        grid-template-columns: repeat(12, 1fr);
+        grid-column: 3/span 12;
+    }
+    .imagesection {
+        display: block;
+        grid-column: auto/span 3;
+        padding-left: 10px;
+        border-left: 2px solid rgb(253, 203, 203);
+    }
+    .imagesection img {
+        width: 100%;
+        height: 100%;
+        max-width: 200px;
+        padding: 20px 0px;
+    }
+    .textsection {
+        display: block;
+        margin-left: 15px;
+        grid-column: 4/span 4;
+        align-self: center;
+        text-align: start;
+        font-size: 1em;
+    }
+    .textsection>a>h2 {
+        display: inline;
+        position: relative;
+        border-left: 1px solid rgb(253, 203, 203);
+        padding: 0px 10px;
+        text-decoration: none;
+        transition: background-color .5s ease-in-out;
+    }
+    .textsection>a>h2::after {
+        z-index: 1;
+        content: "";
+        width: 0%;
+        height: 100%;
+        background: rgb(253, 203, 203, .3);
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        -webkit-transition: height 250ms;
+        transition: all 250ms;
+    }
+    .textsection>a>h2:hover {
+        border-color: transparent;
+    }
+    .textsection>a>h2:hover::after {
+        width: 100%;
+    }
+    .textsection>p {
+        margin-top: .5em;
+    }
+    .summarysection {
+        grid-column: 8/span 5;
+        font-size: .8em;
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        justify-content: space-between;
+        text-align: start;
+        margin-left: 15px;
+        padding: 15px;
+        border-left: 2px solid #fef;
+    }
+    .summarytext>p {
+        border-left: 0px;
+    }
+}
