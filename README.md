@@ -47,8 +47,8 @@
   </a>
 </p>
 
-
-Building a community around your interests is now easy with natforums. It provides you with platform and tools that make it easy for you to create produvtive community. 
+<br />
+Building a community around your interests is now easy with natforums. It provides you with platform and tools that make it easy for you to create a productive community. 
 Meanwhile, making it easy for others to find your community and participate.
 
  Below are some of the features of natforums:
