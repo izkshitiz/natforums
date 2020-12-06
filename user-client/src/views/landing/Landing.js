@@ -34,7 +34,7 @@ class Landing extends Component {
       <React.Fragment>
         <div className={classes.Container}>
           <div className={classes.navbarcontainer}>
-            <div className={classes.logocol} ><Link to=""><img src={logo} alt="companay-logo" width="130" height="130" /></Link></div>
+            <div className={classes.logocol} ><Link to=""><img src={logo} alt="companay-logo" width="130" /></Link></div>
             <div className={classes.navlist}>
 
               {!this.props.username ?
