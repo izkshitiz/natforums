@@ -78,7 +78,7 @@ class Threadslist extends PureComponent {
             marginBottom: 5,
           }}
         >
-          <Button disabled={threads.length === totalThreads} onClick={this.onLoadMore} >{threads.length === totalThreads ? "That is all folks!" : "Loading More"}</Button>
+          <Button disabled={threads.length === totalThreads} onClick={this.onLoadMore} >{threads.length === totalThreads ? "That's all folks :)" : "Loading More"}</Button>
         </div>
       ) : null;
 
