@@ -28,7 +28,7 @@ const mediaStorage = multer.diskStorage({
       file.mimetype === 'video/mpeg' ||
       file.mimetype === 'video/webm') {
       if (!fs.existsSync('public/videos')) {
-        fs.mkdirSync('public/videos');
+        fs.mkdirSync('public/videos', { recursive: true });
       }
       cb(null, 'public/videos')
     } else {
@@ -66,7 +66,7 @@ const fileStorage = multer.diskStorage({
       file.mimetype === 'application/pdf' ||
       file.mimetype === 'application/vnd.ms-powerpoint') {
       if (!fs.existsSync('public/documents')) {
-        fs.mkdirSync('public/documents');
+        fs.mkdirSync('public/documents', { recursive: true });
       }
       cb(null, 'public/documents')
     } else if (file.mimetype === 'application/java-archive' ||
@@ -74,7 +74,7 @@ const fileStorage = multer.diskStorage({
       file.mimetype === 'application/x-7z-compressed' ||
       file.mimetype === 'application/vnd.android.package-archive') {
       if (!fs.existsSync('public/others')) {
-        fs.mkdirSync('public/others');
+        fs.mkdirSync('public/others', { recursive: true });
       }
       cb(null, 'public/others')
     } else {
