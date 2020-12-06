@@ -6,7 +6,7 @@
   <h3 align="center">Community Forums</h3>
 
   <p align="center">
-    Start your own online community with natforums.
+    Start your own community online with natforums.
     <br />
     <br />
     <a href="https://natforums.netlify.app">View Demo</a>
@@ -67,7 +67,7 @@ Meanwhile, making it easy for others to find your community and participate.
 
 ## Getting Started
 
-Softwares listed in prerequisites are required to be installed on your system before you can start using it on local host.
+Softwares listed in prerequisites are required to be installed on your system before you can start using it on localhost.
 
 ### Prerequisites
 
