@@ -31,7 +31,10 @@ module.exports = {
 
   createUser: async function ({ userInput }, req) {
 
-    const { username, email, password } = userInput;
+    const { password } = userInput;
+
+    const username = userInput.username.toLowerCase();
+    const email = userInput.email.toLowerCase();
 
     const errors = [];
     if (!validator.isEmail(email)) {
@@ -87,7 +90,9 @@ module.exports = {
 
   signin: async function ({ email, password }) {
 
-    const user = await User.findOne({ email: email });
+    const emailLowerCase = email.toLowerCase();
+
+    const user = await User.findOne({ email: emailLowerCase });
     if (!user) {
       const error = new Error('User not found.');
       error.code = 401;

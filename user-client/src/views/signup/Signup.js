@@ -45,7 +45,7 @@ class Signup extends Component {
             <Form.Item
               label="Username"
               name="username"
-              rules={[{ required: true, pattern: "^[a-z0-9]{1,16}$", message: 'Please use alphabets or numbers only. Max 16 characters' }]}
+              rules={[{ required: true, pattern: "^[A-Za-z0-9]{1,16}$", message: 'Please use alphabets or numbers only. Max 16 characters' }]}
             >
               <Input />
             </Form.Item>
