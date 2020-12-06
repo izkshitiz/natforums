@@ -131,19 +131,19 @@ module.exports = {
 
     const errors = [];
     if (
-      validator.isEmpty(title) ||
+      validator.isEmpty(title, { ignore_whitespace: true }) ||
       !validator.isLength(title, { min: 5 })
     ) {
-      errors.push({ message: 'Title input is invalid.' });
+      errors.push({ message: 'Title is invalid. Minimum 5 characters are required as input' });
     }
     if (
-      validator.isEmpty(content) ||
+      validator.isEmpty(content, { ignore_whitespace: true }) ||
       !validator.isLength(content, { min: 5 })
     ) {
-      errors.push({ message: 'Content input is invalid.' });
+      errors.push({ message: 'Content is invalid. Minimum 5 characters are required as input' });
     }
     if (errors.length > 0) {
-      const error = new Error('Invalid input.');
+      const error = new Error();
       error.data = errors;
       error.code = 422;
       throw error;
@@ -222,19 +222,19 @@ module.exports = {
 
     const errors = [];
     if (
-      validator.isEmpty(title) ||
+      validator.isEmpty(title, { ignore_whitespace: true }) ||
       !validator.isLength(title, { min: 5 })
     ) {
-      errors.push({ message: 'Title input is invalid.' });
+      errors.push({ message: 'Title is invalid. Minimum 5 characters are required as input' });
     }
     if (
-      validator.isEmpty(content) ||
+      validator.isEmpty(content, { ignore_whitespace: true }) ||
       !validator.isLength(content, { min: 5 })
     ) {
-      errors.push({ message: 'Content input is invalid.' });
+      errors.push({ message: 'Content is invalid. Minimum 5 characters are required as input' });
     }
     if (errors.length > 0) {
-      const error = new Error('Invalid input.');
+      const error = new Error();
       error.data = errors;
       error.code = 422;
       throw error;
@@ -510,14 +510,14 @@ module.exports = {
 
     const errors = [];
     if (
-      validator.isEmpty(comment) ||
+      validator.isEmpty(comment, { ignore_whitespace: true }) ||
       !validator.isLength(comment, { min: 2 })
     ) {
-      errors.push({ message: 'Content is Invalid.' });
+      errors.push({ message: 'Comment is Invalid. Minimum 2 characters are required as input.' });
     }
 
     if (errors.length > 0) {
-      const error = new Error('Invalid input.');
+      const error = new Error();
       error.data = errors;
       error.code = 422;
       throw error;
