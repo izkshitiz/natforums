@@ -141,7 +141,6 @@ const authCheck = (req, res, next) => {
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.post('/mediaUpload', authCheck, uploadMedia.single("media"), (req, res, next) => {
-  console.log(multer.MulterError);
 
   if (!req.file) {
     return res.status(200).json({ message: 'file not uploaded!' });

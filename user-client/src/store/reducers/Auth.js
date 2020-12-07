@@ -12,16 +12,18 @@ import {
 const token = localStorage.getItem('token');
 const username = token && jwtDecode(token).username;
 const weightage = token && jwtDecode(token).weightage;
+const accessLevel = token && jwtDecode(token).accessLevel;
 
 const initialState = {
   token,
   username,
-  weightage
+  weightage,
+  accessLevel
 };
 
 export default (state = initialState, action) => {
-  
-  let username, weightage;
+
+  let username, weightage, accessLevel;
 
   switch (action.type) {
 
@@ -30,9 +32,10 @@ export default (state = initialState, action) => {
     case SIGNIN_USER_SUCCESS:
       username = jwtDecode(action.token).username;
       weightage = jwtDecode(action.token).weightage;
+      accessLevel = jwtDecode(action.token).accessLevel;
       localStorage.setItem('token', action.token);
       return {
-        ...state, token: action.token, username, weightage, requestPending: false
+        ...state, token: action.token, username, weightage, accessLevel, requestPending: false
       };
     case SIGNIN_USER_FAIL:
       return { ...state, error: action.error, requestPending: false };
@@ -42,9 +45,10 @@ export default (state = initialState, action) => {
     case SIGNUP_USER_SUCCESS:
       username = jwtDecode(action.token).username;
       weightage = jwtDecode(action.token).weightage;
+      accessLevel = jwtDecode(action.token).accessLevel;
       localStorage.setItem('token', action.token);
       return {
-        ...state, token: action.token, newUser: true, username, weightage, requestPending: false
+        ...state, token: action.token, newUser: true, username, weightage, accessLevel, requestPending: false
       };
     case SIGNUP_USER_FAIL:
       return { ...state, error: action.error, requestPending: false };

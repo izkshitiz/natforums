@@ -27,6 +27,7 @@ module.exports = (req, res, next) => {
   req.username = decodedToken.username;
   req.userId = decodedToken.userId;
   req.weightage = decodedToken.weightage;
+  req.accessLevel = decodedToken.accessLevel;
   req.isAuth = true;
 
   next();

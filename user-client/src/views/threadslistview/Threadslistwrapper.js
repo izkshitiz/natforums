@@ -6,6 +6,7 @@ import Threadslist from './Threadslist';
 
 export const mapStateToProps = state => ({
   myUsername: state.Auth.username,
+  accessLevel: state.Auth.accessLevel,
   token: state.Auth.token,
   threads: state.Threads.threads,
   totalThreads: state.Threads.totalThreads&&state.Threads.totalThreads,

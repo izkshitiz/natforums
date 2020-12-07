@@ -6,7 +6,7 @@ import classes from './Individualcomment.module.css';
 import { Link } from 'react-router-dom';
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const commentOptions = (deleteCommentAction, token, _id, threadId, myUsername, username, deleteCommentRequestPending) => (
+const commentOptions = (deleteCommentAction, token, _id, threadId, myUsername, accessLevel, username, deleteCommentRequestPending) => (
     <Menu>
 
         <Menu.Item className={classes.optionsmenutext}>
@@ -15,7 +15,7 @@ const commentOptions = (deleteCommentAction, token, _id, threadId, myUsername, u
             </Link>
         </Menu.Item>
 
-        { myUsername === username ?
+        { myUsername === username || accessLevel === 7 ?
             (<Menu.Item disabled={deleteCommentRequestPending} danger>
                 <span onClick={() => deleteCommentAction(token, threadId, _id)} >
                     <DeleteOutlined />Delete comment
@@ -30,7 +30,15 @@ const commentOptions = (deleteCommentAction, token, _id, threadId, myUsername, u
 class Individualcomment extends Component {
 
     render() {
-        const { deleteCommentAction, deleteCommentRequestPending, token, _id, threadId, content, createdAt, myUsername } = this.props;
+        const { deleteCommentAction,
+            deleteCommentRequestPending,
+            token,
+            _id,
+            threadId,
+            content,
+            createdAt,
+            myUsername,
+            accessLevel } = this.props;
         //_id is commentId, myUsername is username decoded from token
 
         return (
@@ -52,7 +60,7 @@ class Individualcomment extends Component {
                                 </div>
                             </React.Fragment> :
                             null}
-                        <Dropdown overlay={() => commentOptions(deleteCommentAction, token, _id, threadId, myUsername, this.props.commentauthor.username, deleteCommentRequestPending)}>
+                        <Dropdown overlay={() => commentOptions(deleteCommentAction, token, _id, threadId, myUsername, accessLevel, this.props.commentauthor.username, deleteCommentRequestPending)}>
                             <MoreOutlined rotate="90" style={{ cursor: "pointer" }} />
                         </Dropdown>
                     </span>

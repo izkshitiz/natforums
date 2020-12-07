@@ -6,6 +6,7 @@ import Threadfullview from './Threadfullview';
 
 const mapStateToProps = state => ({
   myUsername: state.Auth.username,
+  accessLevel: state.Auth.accessLevel,
   token: state.Auth.token,
   publishCommentRequestPending: state.Threads.publishCommentRequestPending,
   deleteThreadRequestPending:state.Threads.deleteThreadRequestPending,

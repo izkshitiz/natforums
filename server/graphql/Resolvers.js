@@ -5,7 +5,7 @@ const getSlug = require('speakingurl');
 const validator = require('validator');
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
-
+const { ADMIN_USERNAME } = require('../helper/Const');
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 
@@ -59,6 +59,14 @@ module.exports = {
       throw error;
     }
 
+    let accessLevel;
+    if (username === ADMIN_USERNAME) {
+      accessLevel = 7;
+    }
+    else {
+      accessLevel = 1;
+    }
+
     const hashedPw = await bcrypt.hash(password, 12);
 
     const user = new User({
@@ -80,6 +88,7 @@ module.exports = {
         username: username,
         email: email,
         weightage: 1,
+        accessLevel,
         userId: createdUser._id.toString()
       },
       secret
@@ -215,9 +224,11 @@ module.exports = {
       throw error;
     }
     if (thread.author._id.toString() !== req.userId.toString()) {
-      const error = new Error('Not authorized!');
-      error.code = 403;
-      throw error;
+      if (req.accessLevel !== 7) {
+        const error = new Error('You are not authorized to update this thread!');
+        error.code = 403;
+        throw error;
+      }
     }
 
     const errors = [];
@@ -667,12 +678,14 @@ module.exports = {
     }
 
     if (req.userId.toString() !== thread.author.toString()) {
-      const error = new Error('You are not auhtorized to delete this thread!');
-      error.code = 403;
-      throw error;
+      if (req.accessLevel !== 7) {
+        const error = new Error('You are not auhtorized to delete this thread!');
+        error.code = 403;
+        throw error;
+      }
     }
 
-    const user = await User.findById(req.userId);
+    const user = await User.findById(thread.author);
     user.threads.pull(threadId);
     await user.save();
 
@@ -700,9 +713,11 @@ module.exports = {
     }
 
     if (req.username !== comment.commentauthor.username) {
-      const error = new Error('You are not auhtorized to delete this comment!');
-      error.code = 403;
-      throw error;
+      if (req.accessLevel !== 7) {
+        const error = new Error('You are not auhtorized to delete this comment!');
+        error.code = 403;
+        throw error;
+      }
     }
 
     thread.comments.pull(commentId);

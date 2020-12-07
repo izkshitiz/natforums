@@ -33,6 +33,7 @@ class Threadfullview extends Component {
             deleteCommentRequestPending={this.props.deleteCommentRequestPending}
             token={this.props.token}
             myUsername={this.props.myUsername}
+            accessLevel={this.props.accessLevel}
             threadId={this.props.thread._id}
             compact={true}
             {...item} />
@@ -51,6 +52,7 @@ class Threadfullview extends Component {
                     {...this.props.thread}
                     token={this.props.token}
                     myUsername={this.props.myUsername}
+                    accessLevel={this.props.accessLevel}
                     deleteThreadAction={this.props.deleteThreadAction}
                     deleteThreadRequestPending={this.props.deleteThreadRequestPending} />
 

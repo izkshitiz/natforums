@@ -39,7 +39,7 @@ const socialIcons = (_id, section) => (
     </React.Fragment>
 )
 
-const threadOptions = (_id, token, myUsername, username, deleteThreadAction) => (
+const threadOptions = (_id, token, myUsername, username, accessLevel, deleteThreadAction) => (
     <Menu>
         <Menu.Item className={classes.optionsmenutext}>
             <Link to="#">
@@ -47,7 +47,7 @@ const threadOptions = (_id, token, myUsername, username, deleteThreadAction) => 
             </Link>
         </Menu.Item>
 
-        { myUsername === username ? (
+        { myUsername === username || accessLevel === 7 ? (
             <React.Fragment>
                 <Menu.Item  >
                     <Link to={"/Editthread/" + _id} >
@@ -82,6 +82,7 @@ class Individualthread extends PureComponent {
             totalpoints,
             token,
             myUsername,
+            accessLevel,
             deleteThreadRequestPending,
             deleteThreadAction } = this.props;
 
@@ -109,7 +110,7 @@ class Individualthread extends PureComponent {
                         <span className={classes.sectiontext}>in </span>
                         <span className={classes.sectiontext}><Link to={"/s/" + section}>{section}</Link></span>
                     </span>
-                    <span className={classes.threadoptionsmenu}> <Dropdown overlay={() => threadOptions(_id, token, myUsername, this.props.author.username, deleteThreadAction)}><MoreOutlined rotate="90" style={{ cursor: "pointer" }} /></Dropdown></span>
+                    <span className={classes.threadoptionsmenu}> <Dropdown overlay={() => threadOptions(_id, token, myUsername, this.props.author.username, accessLevel, deleteThreadAction)}><MoreOutlined rotate="90" style={{ cursor: "pointer" }} /></Dropdown></span>
                 </div>
 
                 {/*Changing the style for content box depending where the component is rendered. */}

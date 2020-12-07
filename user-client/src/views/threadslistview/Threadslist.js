@@ -59,6 +59,7 @@ class Threadslist extends PureComponent {
               {...item}
               token={this.props.token}
               myUsername={this.props.myUsername}
+              accessLevel= {this.props.accessLevel}
               deleteThreadAction={this.props.deleteThreadAction}
               deleteThreadRequestPending={this.props.deleteThreadRequestPending} />
           </Skeleton>
