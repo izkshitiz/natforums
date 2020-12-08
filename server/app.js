@@ -156,13 +156,10 @@ const featureCheck = (req, res, next) => {
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/sign-s3', authCheck, featureCheck, (req, res) => {
-
-  if (process.env.NODE_ENV !== 'production') {
-    aws.config.update({
-      accessKeyId: AWS_ACCESS_KEY,
-      secretAccessKey: AWS_SECRET_ACCESS_KEY,
-    })
-  }
+  aws.config.update({
+    accessKeyId: AWS_ACCESS_KEY,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  })
 
   const s3 = new aws.S3();
   const fileName = new Date().toISOString().replace(/:/g, '-') + '-' + req.query['file-name'];
