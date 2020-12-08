@@ -4,7 +4,7 @@ import ReactDOMServer from 'react-dom/server';
 import { FileAddOutlined, PictureOutlined, VideoCameraAddOutlined, YoutubeOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons';
 import ReactQuill, { Quill } from 'react-quill';
 import { message, Spin } from 'antd';
-import { HOST_URL } from '../../../helper/Url';
+import { HOST_URL, UPLOAD_TYPE, UPLOAD_SUPPORT } from '../../../helper/Const';
 import ImageBlot from '../elements/Imageblot';
 import VideoBlot from '../elements/Videoblot';
 import FileBlot from '../elements/Fileblot';
@@ -105,7 +105,7 @@ class Editor extends React.Component {
 
     uploadImage = (e) => {
         if (e.currentTarget.files.length > 0) {
-            if (process.env.NODE_ENV === "production") {
+            if (UPLOAD_SUPPORT !== "enabled") {
                 message.warn("Feature has been disabled temporarily in production environment. Read the docs for more info.");
                 return;
             }
@@ -115,11 +115,10 @@ class Editor extends React.Component {
             }
             const file = e.currentTarget.files[0];
             const token = this.props.token;
-            let formData = new FormData();
-            formData.append("media", file);
-            this.props.uploadImageAction(token, formData);
+
+            this.props.uploadImageAction(token, UPLOAD_TYPE, file);
         } else {
-            message.error("No image selected");
+            message.error("No image selected.");
         }
     }
 
@@ -129,13 +128,17 @@ class Editor extends React.Component {
         let range = quill.getSelection();
         //Get the position of text cursor
         let position = range ? range.index : 0;
-        quill.insertEmbed(position, "image", { src: HOST_URL + "/" + uploadedImage.filePath.substring(7), alt: uploadedImage.alt.replace(/\.[^/.]+$/, "") });
+        if (UPLOAD_TYPE === "cloud") {
+            quill.insertEmbed(position, "image", { src: uploadedImage.url, alt: uploadedImage.filename });
+        } else {
+            quill.insertEmbed(position, "image", { src: HOST_URL + "/" + uploadedImage.filePath.substring(7), alt: uploadedImage.alt.replace(/\.[^/.]+$/, "") });
+        }
         quill.setSelection(position + 1);
     }
 
     uploadVideo = (e) => {
         if (e.currentTarget.files.length > 0) {
-            if (process.env.NODE_ENV === "production") {
+            if (UPLOAD_SUPPORT !== "enabled") {
                 message.warn("Feature has been disabled temporarily in production environment. Read the docs for more info.");
                 return;
             }
@@ -145,9 +148,8 @@ class Editor extends React.Component {
             }
             const file = e.currentTarget.files[0];
             const token = this.props.token;
-            let formData = new FormData();
-            formData.append("media", file);
-            this.props.uploadVideoAction(token, formData)
+
+            this.props.uploadVideoAction(token, UPLOAD_TYPE, file)
         }
         else {
             message.error("No video selected");
@@ -160,13 +162,18 @@ class Editor extends React.Component {
         let range = quill.getSelection();
         //Get the position of text cursor
         let position = range ? range.index : 0;
-        quill.insertEmbed(position, "video", { src: HOST_URL + "/" + uploadedVideo.filePath.substring(7), title: uploadedVideo.alt.replace(/\.[^/.]+$/, "") });
+        if (UPLOAD_TYPE === "cloud") {
+            quill.insertEmbed(position, "video", { src: uploadedVideo.url, title: uploadedVideo.filename });
+        } else {
+            quill.insertEmbed(position, "video", { src: HOST_URL + "/" + uploadedVideo.filePath.substring(7), title: uploadedVideo.alt.replace(/\.[^/.]+$/, "") });
+        }
+
         quill.setSelection(position + 1);
     }
 
     uploadFile = (e) => {
         if (e.currentTarget.files.length > 0) {
-            if (process.env.NODE_ENV === "production") {
+            if (UPLOAD_SUPPORT !== "enabled") {
                 message.warn("Feature has been disabled temporarily in production environment. Read the docs for more info.");
                 return;
             }
@@ -176,9 +183,8 @@ class Editor extends React.Component {
             }
             const file = e.currentTarget.files[0];
             const token = this.props.token;
-            let formData = new FormData();
-            formData.append("file", file);
-            this.props.uploadFileAction(token, formData);
+
+            this.props.uploadFileAction(token, UPLOAD_TYPE, file);
         }
         else {
             message.error("No File Selected");
@@ -191,7 +197,11 @@ class Editor extends React.Component {
         let range = quill.getSelection();
         //Get the position of text cursor
         let position = range ? range.index : 0;
-        quill.insertEmbed(position, "file", { href: HOST_URL + "/" + uploadedFile.filePath.substring(7), name: uploadedFile.name.replace(/\.[^/.]+$/, "") });
+        if (UPLOAD_TYPE === "cloud") {
+            quill.insertEmbed(position, "file", { href: uploadedFile.url, name: uploadedFile.filename });
+        } else {
+            quill.insertEmbed(position, "file", { href: HOST_URL + "/" + uploadedFile.filePath.substring(7), name: uploadedFile.name.replace(/\.[^/.]+$/, "") });
+        }
         quill.setSelection(position + 1);
     };
 

@@ -1,4 +1,5 @@
 server/node_modules/
 server/public
+server/.env
 user-client/node_modules/
 user-client/build/

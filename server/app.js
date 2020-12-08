@@ -1,4 +1,9 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
+const aws = require('aws-sdk');
 const app = express();
 const Auth = require('./auth/Auth');
 let fs = require('fs');
@@ -8,9 +13,29 @@ const graphqlResolver = require('./graphql/Resolvers');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
+const { UPLOAD_SUPPORT } = require('./helper/Const');
+
+const AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
+const S3_BUCKET = process.env.S3_BUCKET_NAME;
 
 const mediaMaxSize = 500000 //in Bytes ~ 500 KB
 const fileMaxSize = 1000000 //in Bytes ~ 1 MB
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 //Media storage location depending on extension of file
 const mediaStorage = multer.diskStorage({
@@ -104,28 +129,9 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-
-
 let uploadMedia = multer({ storage: mediaStorage, limits: { fileSize: mediaMaxSize }, fileFilter: mediaFilter });
 
-
 let uploadFile = multer({ storage: fileStorage, limits: { fileSize: fileMaxSize }, fileFilter: fileFilter });
-
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
-  );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
 
 app.use(Auth);
 
@@ -138,9 +144,52 @@ const authCheck = (req, res, next) => {
   next();
 }
 
+const featureCheck = (req, res, next) => {
+
+  if (UPLOAD_SUPPORT !== "enabled") {
+    throw new Error('Uploads are disabled');
+  }
+
+  next();
+}
+
 app.use(express.static(path.join(__dirname, '/public')));
 
-app.post('/mediaUpload', authCheck, uploadMedia.single("media"), (req, res, next) => {
+app.get('/sign-s3', authCheck, featureCheck, (req, res) => {
+
+  if (process.env.NODE_ENV !== 'production') {
+    aws.config.update({
+      accessKeyId: AWS_ACCESS_KEY,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY,
+    })
+  }
+
+  const s3 = new aws.S3();
+  const fileName = new Date().toISOString().replace(/:/g, '-') + '-' + req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 120,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+});
+
+app.post('/mediaUpload', authCheck, featureCheck, uploadMedia.single("media"), (req, res, next) => {
 
   if (!req.file) {
     return res.status(200).json({ message: 'file not uploaded!' });
@@ -149,7 +198,7 @@ app.post('/mediaUpload', authCheck, uploadMedia.single("media"), (req, res, next
   return res.status(201).json({ message: 'Media uploaded.', filePath: req.file.path, alt: req.file.originalname });
 });
 
-app.post('/fileUpload', authCheck, uploadFile.single("file"), (req, res, next) => {
+app.post('/fileUpload', authCheck, featureCheck, uploadFile.single("file"), (req, res, next) => {
 
   if (!req.file) {
     return res.status(200).json({ message: 'file not uploaded!' });

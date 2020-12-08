@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { HOST_URL } from '../helper/Url';
+import { HOST_URL } from '../helper/Const';
 
 //  AUTHENTICATE
 export const signupUserHandler = async (username, email, password) => {
