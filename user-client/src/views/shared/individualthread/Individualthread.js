@@ -131,7 +131,7 @@ class Individualthread extends PureComponent {
                     </Popover>
                     <span><CommentOutlined />{" "}{comments.length}</span>
                     <Point compact={compact} userpoints={userpoints} threadId={_id} charge="positive" />
-                    <span style={{ width: 30, textAlign: "center" }}>{" " + totalpoints}</span>
+                    <span style={{ color: "black", width: 30, backgroundColor: "rgb(255, 223, 223)", paddingBottom: 1, borderRadius: 5, textAlign: "center" }}>{" " + totalpoints}</span>
                     <Point compact={compact} userpoints={userpoints} threadId={_id} charge="negative" />
                 </div>
             </div>
