@@ -92,7 +92,7 @@ export default (state = initialState, action) => {
     case CAST_POINT_SUCCESS:
       if (action.compact) {
         threads = updateThreads(state.threads, action.thread);
-        return { ...state, castPointRequestPending: false, threads: threads };
+        return { ...state, castPointRequestPending: false, threads: threads, threadsData: threads };
       } else {
         return { ...state, castPointRequestPending: false, thread: action.thread };
       }
