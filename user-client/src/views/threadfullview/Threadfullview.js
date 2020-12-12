@@ -56,14 +56,12 @@ class Threadfullview extends Component {
                     deleteThreadAction={this.props.deleteThreadAction}
                     deleteThreadRequestPending={this.props.deleteThreadRequestPending} />
 
-                {this.props.token ? <Publishcomment
+                <Publishcomment
                     publishCommentRequestPending={this.props.publishCommentRequestPending}
                     publishCommentAction={this.props.publishCommentAction}
                     token={this.props.token}
                     threadId={this.props.thread._id}
-                    updatedAt={this.props.thread.updatedAt} /> :
-                    null
-                }
+                    updatedAt={this.props.thread.updatedAt} />
 
                 <List
                     dataSource={this.props.thread.comments}

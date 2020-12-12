@@ -392,7 +392,7 @@ export const publishCommentHandler = async (token, threadId, comment) => {
     return responseJsonData.data.publishComment;
   } else {
     const responseJsonData = await response.json();
-    message.error(responseJsonData.errors[0].data[0].message);
+    message.error(responseJsonData.errors[0].message);
     throw Error;
   }
 
