@@ -1,4 +1,4 @@
-# create node 18 base image on alpine
+# create node 16 base image on alpine
 FROM node:16-alpine
 
 RUN mkdir -p /usr/src/app
